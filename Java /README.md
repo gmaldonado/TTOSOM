@@ -76,19 +76,19 @@ Note: You can not use -t, -x and -c together, just once a time.
 If you do not select any option, the TTOSOM will work as a classifier. Will classify the not labeled instances. If the data set just have unlabelled instances, it is going to operate in clustering mode.
 
 
-Examples
-----------------
+###Examples
+
 
 NOTE: The only provided dataset is "iris.arff", the other ones are just examples.
 
 This executes 10-cold cross validation with 100.000 iterations, initial radius =8, final radius=0, initial learning rate = 0.0, final learning rate = 0 and Euclidean distance
 
-java -jar TTOSOM.jar iris.arff topology.txt 100000 8 0 0.9 0 0 -c 10
+`java -jar TTOSOM.jar iris.arff topology.txt 100000 8 0 0.9 0 0 -c 10`
 
 This executes an example using a test set with 100.000 iterations, initial radius =8, final radius=0, initial learning rate = 0.0, final learning rate = 0 and Euclidean distance
 
-java -jar TTOSOM.jar 80.arff topology.txt 100000 8 0 0.9 0 0 -t 20.arff
+`java -jar TTOSOM.jar 80.arff topology.txt 100000 8 0 0.9 0 0 -t 20.arff`
 
 This classifies the instances  with 100.000 iterations, initial radius =8, final radius=0, initial learning rate = 0.0, final learning rate = 0 and Euclidean distance
 
-java -jar TTOSOM.jar dataset.arff topology.txt 100000 8 0 0.9 0 0
+`java -jar TTOSOM.jar dataset.arff topology.txt 100000 8 0 0.9 0 0`
