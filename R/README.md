@@ -49,8 +49,8 @@ For more details about the parameters go to the Java folder and open README
 
 This example loads the TTOSOM script and then executes the classifier with default parameters and returns the tree
 
-source("ttosom.r") #this loads the TTOSOM script
-tree <- ttosom(dataset="iris.arff") #This executes the TTOSOM with the iris dataset and the default parameters.
+`source("ttosom.r") #this loads the TTOSOM script
+tree <- ttosom(dataset="iris.arff") #This executes the TTOSOM with the iris dataset and the default parameters.`
 
 
 * Example 2
