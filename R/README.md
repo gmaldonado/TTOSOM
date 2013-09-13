@@ -49,12 +49,13 @@ For more details about the parameters go to the Java folder and open README
 
 This example loads the TTOSOM script and then executes the classifier with default parameters and returns the tree
 
-`source("ttosom.r") #this loads the TTOSOM script
-tree <- ttosom(dataset="iris.arff") #This executes the TTOSOM with the iris dataset and the default parameters.`
+`source("ttosom.r") #this loads the TTOSOM script`
+`tree <- ttosom(dataset="iris.arff") #This executes the TTOSOM with the iris dataset and the default parameters.`
 
 
 * Example 2
 
 This example loads the TTOSOM script and then executes 10-fold cross-validation with 100.000 iterations, initial radius=8, final radius=0, initial learning rate=0.9, final learning rate= 0.0 and Euclidean distance 
-source("ttosom.r")
-ttosom(dataset="iris.arff",topology="topology.txt",iterations="100000",initRadius="8",finalRadius="0",initLearning="0.9",finalLearning="0.0",distance="0",stats="-x",option_stats="10")
+
+`source("ttosom.r")`
+`ttosom(dataset="iris.arff",topology="topology.txt",iterations="100000",initRadius="8",finalRadius="0",initLearning="0.9",finalLearning="0.0",distance="0",stats="-x",option_stats="10")`
