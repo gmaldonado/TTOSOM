@@ -59,4 +59,4 @@ This example loads the TTOSOM script and then executes 10-fold cross-validation 
 
 `source("ttosom.r")`
 `ttosom(dataset="iris.arff",topology="topology.txt",iterations="100000",initRadius="8",finalRadius="0",`
-`+initLearning="0.9",finalLearning="0.0",distance="0",stats="-x",option_stats="10")`
+`initLearning="0.9",finalLearning="0.0",distance="0",stats="-x",option_stats="10")`
