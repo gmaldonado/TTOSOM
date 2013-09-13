@@ -1,4 +1,4 @@
-Tree_based_Topology_Oriented_SOM
+TTOSOM
 ================================
 
-Tree-based Topology-Oriented SOM: Java implementation and R binding
+TTOSOM: Java implementation and R bindings
