@@ -1,10 +1,8 @@
-TTOSOM How to
-===============
+#TTOSOM How to
 
 All parameters must be strings, including learning rate, etc. this is because the integration with java.
 
-Parameters
--------------------
+###Parameters
 
 * dataset the training arff file 
 * topology The topology is specified in a text file in one line specifying the number of children per node following the guidelines of the describe topopology method described in
@@ -24,8 +22,8 @@ Parameters
 * seed_value the new value of the seed
 
 
-Default parameters 
------------------------------
+###Default parameters 
+
 We include default parameters in the TTOSOM.r file which are 
 
 topology = "topology.txt"
@@ -45,8 +43,7 @@ You must have the "rJava" package installed.
 
 For more details about the parameters go to the Java folder and open README
 
-Examples
--------------------
+###Examples
 
 Example 1.
 
