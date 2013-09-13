@@ -26,18 +26,18 @@ All parameters must be strings, including learning rate, etc. this is because th
 
 We include default parameters in the TTOSOM.r file which are 
 
-topology = "topology.txt"
-iterations = "10"
-initRadius = "8"
-finalRadius = "0"
-initialLearning = "0.9"
-finalLearning = "0.0"
-distance="0"
-inputFile=""
-outputFile=""
-stats=""
-option_stats=""
-seed_value=""
+* topology = "topology.txt"
+* iterations = "10"
+* initRadius = "8"
+* finalRadius = "0"
+* initialLearning = "0.9"
+* finalLearning = "0.0"
+* distance="0"
+* inputFile=""
+* outputFile=""
+* stats=""
+* option_stats=""
+* seed_value=""
 
 You must have the "rJava" package installed.
 
@@ -45,7 +45,7 @@ For more details about the parameters go to the Java folder and open README
 
 ###Examples
 
-Example 1.
+* Example 1.
 
 This example loads the TTOSOM script and then executes the classifier with default parameters and returns the tree
 
@@ -53,7 +53,7 @@ source("ttosom.r") #this loads the TTOSOM script
 tree <- ttosom(dataset="iris.arff") #This executes the TTOSOM with the iris dataset and the default parameters.
 
 
-Example 2
+* Example 2
 
 This example loads the TTOSOM script and then executes 10-fold cross-validation with 100.000 iterations, initial radius=8, final radius=0, initial learning rate=0.9, final learning rate= 0.0 and Euclidean distance 
 source("ttosom.r")
