@@ -1,5 +1,7 @@
-How to use TTOSOM
+#TTOSOM How to 
 
+
+#Parameters 
 The parameters of the TTOSOM are (mandatory order):
 
 data set path 
@@ -11,7 +13,7 @@ initial learning rate
 final learning rate 
 distance function (0 = Euclidean distance, 1 = Manhattan distance)
 
-As optional parameters: 
+Additional parameters 
 
 -i input file which loads a tree as a serialized TTOSOM object
 -o output file which saves a tree as a serialized TTOSOM object
@@ -72,7 +74,7 @@ Note: You can not use -t, -x and -c together, just once a time.
 If you do not select any option, the TTOSOM will work as a classifier. Will classify the not labeled instances. If the data set just have unlabelled instances, it is going to operate in clustering mode.
 
 
-Examples
+#Examples
 
 NOTE: The only provided dataset is "iris.arff", the other ones are just examples.
 
