@@ -1,72 +1,73 @@
-TTOSOM How to 
-=============
+#TTOSOM How to 
 
-Parameters 
------------------
+###Parameters 
+
 The parameters of the TTOSOM are (mandatory order):
 
-data set path 
-tree file path 
-number of iterations 
-initial radius
-final radius
-initial learning rate
-final learning rate 
-distance function (0 = Euclidean distance, 1 = Manhattan distance)
+* data set path 
+* tree file path 
+* number of iterations 
+* initial radius
+* final radius
+* initial learning rate
+* final learning rate 
+* distance function (0 = Euclidean distance, 1 = Manhattan distance)
 
 Additional parameters 
 
--i input file which loads a tree as a serialized TTOSOM object
--o output file which saves a tree as a serialized TTOSOM object
--t test set path 
--x cross validation folds 
--s seed value 
--c clustering option 
+* -i input file which loads a tree as a serialized TTOSOM object
+* -o output file which saves a tree as a serialized TTOSOM object
+* -t test set path 
+* -x cross validation folds 
+* -s seed value 
+* -c clustering option 
 
 The meaning of the parameters are: 
 
-data set path
-	Must be an ARFF file which must specify the classes of the data set (at least one, with any value). For every instance with not known label, you should use "?", as an example:
+* data set path
+	Must be an ARFF file which must specify the classes of the data set (at least one, with any value). For every instance with not known label, you should use "?", as an 
+
+* example:
 	1.3, 2.5, 3.4,? 
 
-tree file path
-	File which contains one line with the topology of the tree as an array. Every element in the line MUST be separated by an space and it indicates the number of childs of that node in the tree
+* tree file path
+	File which contains one line with the topology of the tree as an array. Every element in the line MUST be separated by an space and it indicates the number of childs of that * node in the tree
 
-number of iterations
+* number of iterations
 	This is the number of iterations for the tree and must be an integer value
 
-initial radius
+* initial radius
 	This is the initial radius and must be a double value 
 
-final radius
+* final radius
 	This is the final radius and must be a double value 
 
-initial learning rate
+* initial learning rate
 	This is the initial learning rate and must be a double value
 
-final learning rate 
+* final learning rate 
 	This is the final learning rate and must be a double value 
 
-distance function
+* distance function
 	This is the distance function to be used. 0 for Euclidean distance and 1 for Manhattan distance
 
--i input file 
+* -i input file 
 	Loads a tree as a serialized TTOSOM object (-i is mandatory, to indicate the option)
 
 
--o output file 
+* -o output file 
 	Saves a tree as a serialized TTOSOM object (-o is mandatory, to indicate the option)
 
--t test set path	
+* -t test set path	
 	If you want to use a test set to test the TTOSOM and get statistical information (-t is mandatory, to indicate the option)
 
--x cross validation folds 
+* -x cross validation folds 
 	If you want to use cross validation, you should select the number of folds (-x is mandatory to indicate the option)
 
--s seed value 
+* -s seed value 
 	If you want to change the seed of the random value, by default is 1 (-s is mandatory, to indicate the option)
 
--c
+* -c
 	The program operates in cluster mode and returns the cluster vector, which indicates which is the cluster (neuron) for that instance in the TTOSOM
 
 
