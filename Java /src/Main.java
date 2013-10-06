@@ -353,7 +353,7 @@ public class Main {
         try{
             System.out.println("Cross Validation");
             Evaluation eval = new Evaluation(dataSet);
-            eval.crossValidateModel(ttosom, dataSet,folds, new Random(1));
+            eval.crossValidateModel(ttosom, dataSet,folds, new Random(seedValue));
             System.out.println(eval.toSummaryString());
             System.out.println(eval.toClassDetailsString());
             System.out.println(eval.toMatrixString());
