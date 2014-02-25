@@ -25,6 +25,7 @@ import weka.core.Instances;
 
 /**
  * This class represents the implementation of the TTOSOM
+ * @author Gonzalo Maldonado
  */
 
 public class TTOSOM extends Classifier implements Serializable{
@@ -80,7 +81,7 @@ public class TTOSOM extends Classifier implements Serializable{
                System.out.print (" ");
           System.out.println(node.getWeightWithoutClass());
           neurons.add(node.getWeight());
-         for(Neuron child : node.getChilds()){
+         for(Neuron child : node.getChildren()){
              preOrderWeights(child, indent+2);
          }
       }
@@ -113,7 +114,7 @@ public class TTOSOM extends Classifier implements Serializable{
               distance.calculateDistance(inputSample, actualNode.getWeight(), dataSet)){
                bmu = actualNode;
            }
-           for(Neuron child : actualNode.getChilds()){
+           for(Neuron child : actualNode.getChildren()){
                bmu = findBMU(child, inputSample, bmu);
            }
        }
@@ -133,7 +134,7 @@ public class TTOSOM extends Classifier implements Serializable{
            return;
        }
        else{
-           for(Neuron child : current.getChilds()){
+           for(Neuron child : current.getChildren()){
                if(child != origin ){
                    bubbleOfActivity.add(child);
                    calculateNeighborhood(bubbleOfActivity,child,radius-1, current);
@@ -249,7 +250,7 @@ public class TTOSOM extends Classifier implements Serializable{
             learningRate = calculateValue(learningRate, initialLearning, finalLearning, iterations);  
            
         }
-        
+        System.out.println("ok");
         if(!clustering){
             //Let's get the labeled data to generate the classifier 
             Instances labeledData = new Instances(dataSet,0);
@@ -265,6 +266,8 @@ public class TTOSOM extends Classifier implements Serializable{
             //Let's assign a class to each neuron in the tree.
             int[] clusterVector = generateClusterVector(labeledData, distance);
             assignClassToNeurons(root, labeledData, clusterVector);
+
+            
         }
         
 
@@ -278,6 +281,7 @@ public class TTOSOM extends Classifier implements Serializable{
      */
     private void assignClassToNeurons(Neuron node,Instances labeledData,
                                       int[] clusterVector){
+        
         if ( node != null ){
             int [] classes = new int[labeledData.numClasses()];
             
@@ -311,9 +315,12 @@ public class TTOSOM extends Classifier implements Serializable{
                 node.getWeight().setClassValue(popularClassIndex);
             }
             else{
-                node.getWeight().setClassMissing();
+                //node.getWeight().setClassMissing();   
+                Random rdm = new Random();
+                node.getWeight().setClassValue(rdm.nextInt(labeledData.numClasses()));
+                
             }
-            for(Neuron child : node.getChilds()){
+            for(Neuron child : node.getChildren()){
                 assignClassToNeurons(child,labeledData,clusterVector);
              }
         }
@@ -328,6 +335,8 @@ public class TTOSOM extends Classifier implements Serializable{
     @Override
     public double classifyInstance(Instance instance){
         Neuron bmu = findBMU(root,instance, root);
+        Double classValue = bmu.getWeight().classValue();
+        //System.out.println("Instance: "+instance+" predicted class: "+instance.classAttribute().value(classValue.intValue()));
         return bmu.getWeight().classValue();
     }
 
