@@ -1,0 +1,8 @@
+float media (float datos[], int n){
+	int *p;
+	float suma =0;
+	for(p=datos;p<datos+n;p++){
+		suma += *p;
+	}
+	return suma/n;
+}
