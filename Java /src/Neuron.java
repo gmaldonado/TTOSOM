@@ -16,6 +16,7 @@
  *  along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
+
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Random;
@@ -24,11 +25,12 @@ import weka.core.Instances;
 
 /**
  * This class represents a neuron in the Tree of the TTOSOM
+ * @author Gonzalo Maldonado
  */
 public class Neuron implements Serializable{
     
     private int id; 
-    private ArrayList<Neuron> childs;
+    private ArrayList<Neuron> children;
     private Neuron parent;
     private Instance weight;
     
@@ -42,14 +44,14 @@ public class Neuron implements Serializable{
           this could cause chaos, so it's VERY IMPORTANT to copy the object,
           that it's the same as the method clone in Java*/
         this.weight = (Instance)dataSet.instance(random.nextInt(dataSet.numInstances())).copy();
-        this.childs = new ArrayList<Neuron>();
+        this.children = new ArrayList<Neuron>();
         this.parent = parent;
         this.id = elements.get(0).getKey();
         
         elements.remove(0);
                        
         for(int i=0;i<childrensCount;i++){
-            this.childs.add(new Neuron(this,elements,dataSet));
+            this.children.add(new Neuron(this,elements,dataSet));
         }
         
     }
@@ -81,12 +83,12 @@ public class Neuron implements Serializable{
         this.id = id;
     }
 
-    public ArrayList<Neuron> getChilds() {
-        return childs;
+    public ArrayList<Neuron> getChildren() {
+        return children;
     }
 
-    public void setChilds(ArrayList<Neuron> childs) {
-        this.childs = childs;
+    public void setChildren(ArrayList<Neuron> children) {
+        this.children = children;
     }
 
     public Neuron getParent() {
