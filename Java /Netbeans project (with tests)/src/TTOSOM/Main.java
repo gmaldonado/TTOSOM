@@ -259,7 +259,7 @@ public class Main {
         //Depending on the option selected by the user selects the distance to use
         switch(distanceType){
         case 0:
-            distance = new NormalizedEuclideanDistance();
+            distance = new EuclideanDistanceMissingValues();
             break;
         default:
             distance = new NormalizedManhattanDistance();
