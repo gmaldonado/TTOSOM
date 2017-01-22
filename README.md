@@ -1,4 +1,4 @@
 TTOSOM
 ================================
 
-TTOSOM: Java implementation and R bindings
+TTOSOM: Java implementation
