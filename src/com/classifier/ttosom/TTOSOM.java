@@ -39,12 +39,20 @@ public class TTOSOM extends AbstractClassifier implements Serializable{
 	private int iterations;
 	private Distance distance;
 	private final Instances trainingSet;
-	private boolean isClusteringMode;
+	private boolean inClusteringMode;
 	private final Random random;
 	private int seed = 1;
 	private List<Pair<Integer, Integer>> topology;
+	private static  TTOSOM instance = null;
 
-	public TTOSOM(Instances trainingSet){
+	public static TTOSOM getInstance(Instances trainingSet){
+		if(instance == null){
+			return new TTOSOM(trainingSet);
+		}
+		return instance;
+	}
+
+	private TTOSOM(Instances trainingSet){
 		this.random = new Random(seed);
 		this.trainingSet = trainingSet;
 	}
@@ -74,8 +82,9 @@ public class TTOSOM extends AbstractClassifier implements Serializable{
 		initialLearning = toDouble(getOption("il", options));
 		finalLearning = toDouble(getOption("fl", options));
 		distance = selectDistance(getOption("d", options));
-		isClusteringMode = createClusteringOption(getOption("c", options));
+		inClusteringMode = createClusteringOption(getOption("c", options));
 		seed = toInt(getOption("s", options));
+
 	}
 
 	private void assignClassToNeurons(Neuron node,Instances labeledData,
@@ -175,7 +184,7 @@ public class TTOSOM extends AbstractClassifier implements Serializable{
 
 
 	private void computeLabels() {
-		if(!isClusteringMode){
+		if(!inClusteringMode){
 			final Instances labeledData = new Instances(trainingSet,0);
 			Instance aux;
 
@@ -194,6 +203,7 @@ public class TTOSOM extends AbstractClassifier implements Serializable{
 
 	private void describeTopology(){
 		root = new Neuron(null,topology,trainingSet);
+
 		map= new HashMap<Neuron, Map<Integer, List<Neuron>>> ();
 
 		neuronList.clear();
@@ -306,5 +316,16 @@ public class TTOSOM extends AbstractClassifier implements Serializable{
 	}
 
 
+	public Random getRandom(){
+		return this.random;
+	}
+
+	public int getSeed(){
+		return this.seed;
+	}
+
+	public boolean isInClusteringMode(){
+		return inClusteringMode;
+	}
 
 }

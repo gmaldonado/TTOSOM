@@ -1,7 +1,11 @@
 package com.classifier.ttosom;
 
 
+import static com.classifier.ttosom.utils.PerformanceMetricsUtils.crossValidation;
+import static com.classifier.ttosom.utils.PerformanceMetricsUtils.trainTestSet;
 import static com.classifier.ttosom.utils.Utils.readArffFile;
+import static org.apache.commons.lang3.StringUtils.isNotBlank;
+import static org.apache.commons.lang3.math.NumberUtils.toInt;
 import static weka.core.Utils.getOption;
 
 import weka.core.Instances;
@@ -11,12 +15,39 @@ public class Main {
 
 	public static void main(String[] args) throws Exception{
 		final Instances trainingSet = readArffFile(getOption("t",args)); //training
-		final TTOSOM ttosom = new TTOSOM(trainingSet);
+		final String foldsOption = getOption("x",args);
+		final String testingSetOption = getOption("T",args);
+		final TTOSOM ttosom = TTOSOM.getInstance(trainingSet);
 		ttosom.setOptions(args);
+
+		if(isNotBlank(foldsOption)){
+			final Integer folds = toInt(foldsOption);
+			crossValidation(ttosom,trainingSet,folds);
+		}
+
+		else if(ttosom.isInClusteringMode()) {
+			generateClustering(trainingSet, ttosom);
+		}
+
+		else if(isNotBlank(testingSetOption)){
+			final Instances testingSet = readArffFile(testingSetOption);
+			trainTestSet(ttosom, trainingSet, testingSet);
+		}
+
+		else {
+			ttosom.buildClassifier(trainingSet);
+			classifyUnlabeledData(ttosom);
+		}
+
+
+	}
+
+	private static void generateClustering(final Instances trainingSet, final TTOSOM ttosom) throws Exception {
 		ttosom.buildClassifier(trainingSet);
-
-		classifyUnlabeledData(ttosom);
-
+		final int[] clusterVector = ttosom.generateClusterVector(trainingSet);
+		for (final int element : clusterVector) {
+			System.out.print(element+" ");
+		}
 	}
 
 	private static void classifyUnlabeledData(final TTOSOM ttosom) {

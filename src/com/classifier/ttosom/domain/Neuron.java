@@ -19,18 +19,19 @@ public class Neuron implements Serializable{
 	private Neuron parent;
 	private Instance weight;
 
-	public Neuron(Neuron parent,List<Pair<Integer,Integer>> treeAsList,Instances dataSet){
-		final int childrenCount = treeAsList.get(0).getValue();
+	public Neuron(Neuron parent,List<Pair<Integer,Integer>> topology,Instances dataSet){
+		final int childrenCount = topology.get(0).getValue();
 		final Random random = new Random();
 		this.weight = (Instance)dataSet.instance(random.nextInt(dataSet.numInstances())).copy();
 		this.children = new ArrayList<Neuron>();
 		this.parent = parent;
-		this.id = treeAsList.get(0).getKey();
-		treeAsList.remove(0);
+		this.id = topology.get(0).getKey();
+		topology.remove(0);
 
 		for(int i=0;i<childrenCount;i++){
-			this.children.add(new Neuron(this,treeAsList,dataSet));
+			this.children.add(new Neuron(this,topology,dataSet));
 		}
+
 
 	}
 
