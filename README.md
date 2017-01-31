@@ -68,3 +68,5 @@ This executes 10-cold cross validation with 100.000 iterations, initial radius =
 
 `java -jar TTOSOM.jar -t training-set.arff -g tree.file -i 100000 -r 4 -R 0 -l 0.9 -L 0 -d 0 -x 10`
 
+###TO DO:
+This java code will have an integration with R in the near future. The idea is to have a small script which can use all the core functionalities of the TTOSOM.
