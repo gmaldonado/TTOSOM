@@ -9,7 +9,6 @@ import static weka.core.Utils.getOption;
 
 import java.io.Serializable;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -342,13 +341,6 @@ public class TTOSOM extends AbstractClassifier implements Serializable{
 
 	public boolean isInClusteringMode(){
 		return inClusteringMode;
-	}
-
-	public void printClusterVector() throws Exception{
-		buildClassifier(trainingSet);
-		final int[] clusterVector = generateClusterVector(trainingSet);
-		System.out.print(Arrays.toString(clusterVector));
-		//IntStream.of(clusterVector).forEach(element -> System.out.print(" "+element));
 	}
 
 }

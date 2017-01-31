@@ -42,7 +42,6 @@ public class Main {
 		}
 
 		else {
-			ttosom.buildClassifier(trainingSet);
 			classifyUnlabeledData(ttosom);
 		}
 
@@ -56,7 +55,7 @@ public class Main {
 		IntStream.of(clusterVector).forEach(element -> System.out.print(" "+element));
 	}
 
-	private static void classifyUnlabeledData(final TTOSOM ttosom) {
+	private static void classifyUnlabeledData(final TTOSOM ttosom) throws Exception {
 		final Instances dataSet = ttosom.getTrainingSet();
 		//Let's separate the unlabeled data
 		final Instances unlabeled = new Instances(dataSet,0);
@@ -67,13 +66,7 @@ public class Main {
 		}
 		if(unlabeled.numInstances()>0){
 			if(unlabeled.numInstances()==dataSet.numInstances()){
-				//If we just have unlabeled instances, then do clustering
-				System.out.println("Clustering (you have only unlabed data)");
-				final int[] clusterVector =ttosom.generateClusterVector(dataSet);
-				for (final int element : clusterVector) {
-					System.out.print(element+" ");
-				}
-				System.out.println("");
+				printClusterVector(ttosom);
 			}
 			else{
 				System.out.println("");
