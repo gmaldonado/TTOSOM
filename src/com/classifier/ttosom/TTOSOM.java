@@ -9,6 +9,7 @@ import static weka.core.Utils.getOption;
 
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -28,6 +29,15 @@ import weka.core.Instances;
 
 public class TTOSOM extends AbstractClassifier implements Serializable{
 
+	private static final String SEED_OPTION = "s";
+	private static final String CLUSTERING_OPTION = "c";
+	private static final String DISTANCE_OPTION = "d";
+	private static final String FINAL_LEARNING_RATE_OPTION = "L";
+	private static final String INITIAL_LEARNING_RATE_OPTION = "l";
+	private static final String FINAL_RADIUS_OPTION = "R";
+	private static final String INITIAL_RADIUS_OPTION = "r";
+	private static final String ITERATIONS_OPTION = "i";
+	private static final String TREE_OPTION = "g";
 	private static final long serialVersionUID = -8464084336600641535L;
 	private Neuron root;
 	private Map<Neuron, Map<Integer, List<Neuron>>> map;
@@ -73,18 +83,15 @@ public class TTOSOM extends AbstractClassifier implements Serializable{
 
 	@Override
 	public void setOptions(String[] options) throws Exception {
-		super.setOptions(options);
-
-		topology = readTopology(getOption("tree", options)); //topology tree
-		iterations = toInt(getOption("it", options));
-		initialRadius = toDouble(getOption("ir", options));
-		finalRadius = toDouble(getOption("fr", options));
-		initialLearning = toDouble(getOption("il", options));
-		finalLearning = toDouble(getOption("fl", options));
-		distance = selectDistance(getOption("d", options));
-		inClusteringMode = createClusteringOption(getOption("c", options));
-		seed = toInt(getOption("s", options));
-
+		topology = readTopology(getOption(TREE_OPTION, options));
+		iterations = toInt(getOption(ITERATIONS_OPTION, options));
+		initialRadius = toDouble(getOption(INITIAL_RADIUS_OPTION, options));
+		finalRadius = toDouble(getOption(FINAL_RADIUS_OPTION, options));
+		initialLearning = toDouble(getOption(INITIAL_LEARNING_RATE_OPTION, options));
+		finalLearning = toDouble(getOption(FINAL_LEARNING_RATE_OPTION, options));
+		distance = selectDistance(getOption(DISTANCE_OPTION, options));
+		inClusteringMode = createClusteringOption(getOption(CLUSTERING_OPTION, options));
+		seed = toInt(getOption(SEED_OPTION, options));
 	}
 
 	private void assignClassToNeurons(Neuron node,Instances labeledData,
@@ -164,15 +171,14 @@ public class TTOSOM extends AbstractClassifier implements Serializable{
 
 	private void cluster(Instances data) {
 
-		double radius = initialRadius;
-		double learningRate = initialLearning;
+		double currentRadius = initialRadius;
+		double currentLearningRate = initialLearning;
 
 		for(int i=0;i<iterations;i++){
 			final int j = random.nextInt(data.numInstances());
-			train(data.instance(j), root,round(radius), learningRate);
-			radius = calculateValue(radius, initialRadius, finalRadius, iterations);
-			learningRate = calculateValue(learningRate, initialLearning, finalLearning, iterations);
-
+			train(data.instance(j), root,round(currentRadius), currentLearningRate);
+			currentRadius = calculateValue(currentRadius, initialRadius, finalRadius, iterations);
+			currentLearningRate = calculateValue(currentLearningRate, initialLearning, finalLearning, iterations);
 		}
 	}
 
@@ -215,15 +221,15 @@ public class TTOSOM extends AbstractClassifier implements Serializable{
 	private Neuron findBMU(Neuron currentNode,Instance inputSample, Neuron bestSoFar){
 
 		double distanceResult =distance.calculate(inputSample, bestSoFar.getWeight());
-		double c;
+		double currentDistance;
 		Neuron candidateNeuron=null;
 
 		for (final Neuron neuron : neuronList) {
 			candidateNeuron = neuron;
-			c=distance.calculate(inputSample, candidateNeuron.getWeight());
-			if(c < distanceResult){
+			currentDistance=distance.calculate(inputSample, candidateNeuron.getWeight());
+			if(currentDistance < distanceResult){
 				bestSoFar = candidateNeuron;
-				distanceResult=c; // remember the distance
+				distanceResult=currentDistance;
 			}
 		}
 		return bestSoFar;
@@ -299,11 +305,21 @@ public class TTOSOM extends AbstractClassifier implements Serializable{
 	}
 
 
-	private Distance selectDistance(String distance){
-		if("0".equals(distance) || distance==null){
-			return new EuclideanDistance();
+	private Distance selectDistance(String distanceParameter){
+
+		Distance distance = null;
+
+		switch(distanceParameter){
+		case "0":
+			distance = new EuclideanDistance();
+			break;
+		case "1":
+			distance = new ManhattanDistance();
+			break;
+		default:
+			throw new IllegalArgumentException("Invalid type of distance");
 		}
-		return new ManhattanDistance();
+		return distance;
 	}
 
 	private boolean createClusteringOption(String clusteringOption){
@@ -326,6 +342,13 @@ public class TTOSOM extends AbstractClassifier implements Serializable{
 
 	public boolean isInClusteringMode(){
 		return inClusteringMode;
+	}
+
+	public void printClusterVector() throws Exception{
+		buildClassifier(trainingSet);
+		final int[] clusterVector = generateClusterVector(trainingSet);
+		System.out.print(Arrays.toString(clusterVector));
+		//IntStream.of(clusterVector).forEach(element -> System.out.print(" "+element));
 	}
 
 }

@@ -8,15 +8,22 @@ import static org.apache.commons.lang3.StringUtils.isNotBlank;
 import static org.apache.commons.lang3.math.NumberUtils.toInt;
 import static weka.core.Utils.getOption;
 
+import java.util.stream.IntStream;
+
 import weka.core.Instances;
 
 
 public class Main {
 
+
+	private static final String TESTING_SET_OPTION = "T";
+	private static final String CROSS_VALIDATION_OPTION = "x";
+	private static final String TRAINING_SET_OPTION = "t";
+
 	public static void main(String[] args) throws Exception{
-		final Instances trainingSet = readArffFile(getOption("t",args)); //training
-		final String foldsOption = getOption("x",args);
-		final String testingSetOption = getOption("T",args);
+		final Instances trainingSet = readArffFile(getOption(TRAINING_SET_OPTION,args));
+		final String foldsOption = getOption(CROSS_VALIDATION_OPTION,args);
+		final String testingSetOption = getOption(TESTING_SET_OPTION,args);
 		final TTOSOM ttosom = TTOSOM.getInstance(trainingSet);
 		ttosom.setOptions(args);
 
@@ -26,7 +33,7 @@ public class Main {
 		}
 
 		else if(ttosom.isInClusteringMode()) {
-			generateClustering(trainingSet, ttosom);
+			printClusterVector(ttosom);
 		}
 
 		else if(isNotBlank(testingSetOption)){
@@ -42,12 +49,11 @@ public class Main {
 
 	}
 
-	private static void generateClustering(final Instances trainingSet, final TTOSOM ttosom) throws Exception {
-		ttosom.buildClassifier(trainingSet);
-		final int[] clusterVector = ttosom.generateClusterVector(trainingSet);
-		for (final int element : clusterVector) {
-			System.out.print(element+" ");
-		}
+
+	private static void printClusterVector(TTOSOM ttosom) throws Exception{
+		ttosom.buildClassifier(ttosom.getTrainingSet());
+		final int[] clusterVector = ttosom.generateClusterVector(ttosom.getTrainingSet());
+		IntStream.of(clusterVector).forEach(element -> System.out.print(" "+element));
 	}
 
 	private static void classifyUnlabeledData(final TTOSOM ttosom) {

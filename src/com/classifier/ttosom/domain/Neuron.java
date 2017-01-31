@@ -27,23 +27,9 @@ public class Neuron implements Serializable{
 		this.parent = parent;
 		this.id = topology.get(0).getKey();
 		topology.remove(0);
-
 		for(int i=0;i<childrenCount;i++){
 			this.children.add(new Neuron(this,topology,dataSet));
 		}
-
-
-	}
-
-	public String getWeightWithoutClass(){
-		String weightWithoutClass="";
-		for(int i=0;i<this.weight.numAttributes()-1;i++){
-			weightWithoutClass+=this.weight.value(i);
-			if(i!=this.weight.numAttributes()-2){
-				weightWithoutClass+=",";
-			}
-		}
-		return weightWithoutClass;
 	}
 
 	public void setWeight(Instance weight){

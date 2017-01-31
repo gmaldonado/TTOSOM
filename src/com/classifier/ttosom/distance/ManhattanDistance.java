@@ -16,7 +16,6 @@ public class ManhattanDistance implements Distance{
 				result+=abs(item1.value(i)-item2.value(i));
 			}
 		}
-
 		return result;
 	}
 

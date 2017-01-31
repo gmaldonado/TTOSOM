@@ -17,7 +17,6 @@ public class PerformanceMetricsUtils {
 			System.out.println(eval.toMatrixString());
 		}
 		catch(final Exception e){
-			//System.out.println(e.printStackTrace());
 			e.printStackTrace();
 		}
 	}
